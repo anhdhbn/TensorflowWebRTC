@@ -2,8 +2,10 @@ import object_detection_api
 import os
 from PIL import Image
 from flask import Flask, request, Response
+from flask_ngrok import run_with_ngrok
 
 app = Flask(__name__)
+run_with_ngrok(app)
 
 # for CORS
 @app.after_request
@@ -14,14 +16,18 @@ def after_request(response):
     return response
 
 
+# @app.route('/')
+# def index():
+#     return Response('Tensor Flow object detection')
+
+
+# @app.route('/local')
+# def local():
+#     return Response(open('./static/local.html').read(), mimetype="text/html")
+
 @app.route('/')
-def index():
-    return Response('Tensor Flow object detection')
-
-
-@app.route('/local')
 def local():
-    return Response(open('./static/local.html').read(), mimetype="text/html")
+    return Response(open('./static/index.html').read(), mimetype="text/html")
 
 
 @app.route('/video')
@@ -64,7 +70,8 @@ def image():
 
 if __name__ == '__main__':
 	# without SSL
-    app.run(debug=True, host='0.0.0.0')
+    # app.run(debug=True, host='0.0.0.0')
+    app.run()
 
 	# with SSL
     #app.run(debug=True, host='0.0.0.0', ssl_context=('ssl/server.crt', 'ssl/server.key'))
