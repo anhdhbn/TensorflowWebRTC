@@ -94,7 +94,7 @@ def get_objects(image, threshold=0.5):
     # classes = np.squeeze(classes).astype(np.int32)
     # scores = np.squeeze(scores)
     # boxes = np.squeeze(boxes)
-    output_dict = sess.run(tensor_dict,
+    output_dict = sess.run([detection_boxes, detection_scores, detection_classes, num_detections],
                              feed_dict={image_tensor: image})
 
       # all outputs are float32 numpy arrays, so convert types as appropriate
