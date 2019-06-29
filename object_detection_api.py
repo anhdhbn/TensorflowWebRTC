@@ -87,13 +87,22 @@ def get_objects(image, threshold=0.5):
     # Expand dimensions since the model expects images to have shape: [1, None, None, 3]
     image_np_expanded = np.expand_dims(image_np, axis=0)
     # Actual detection.
-    (boxes, scores, classes, num) = sess.run(
-        [detection_boxes, detection_scores, detection_classes, num_detections],
-        feed_dict={image_tensor: image_np_expanded})
+    # (boxes, scores, classes, num) = sess.run(
+    #     [detection_boxes, detection_scores, detection_classes, num_detections],
+    #     feed_dict={image_tensor: image_np_expanded})
 
-    classes = np.squeeze(classes).astype(np.int32)
-    scores = np.squeeze(scores)
-    boxes = np.squeeze(boxes)
+    # classes = np.squeeze(classes).astype(np.int32)
+    # scores = np.squeeze(scores)
+    # boxes = np.squeeze(boxes)
+    output_dict = sess.run(tensor_dict,
+                             feed_dict={image_tensor: image})
+
+      # all outputs are float32 numpy arrays, so convert types as appropriate
+    num = int(output_dict['num_detections'][0])
+    # num = (output_dict['num_detections'][0])
+    classes = output_dict['detection_classes'][0].astype(np.int64)
+    boxes = output_dict['detection_boxes'][0]
+    scores = output_dict['detection_scores'][0]
 
     obj_above_thresh = sum(n > threshold for n in scores)
     print("detected %s objects in image above a %s score" % (obj_above_thresh, threshold))
@@ -103,7 +112,7 @@ def get_objects(image, threshold=0.5):
     # Add some metadata to the output
     item = Object()
     item.version = "0.0.1"
-    item.numObjects = obj_above_thresh
+    item.numObjects = int(obj_above_thresh)
     item.threshold = threshold
     output.append(item)
 
