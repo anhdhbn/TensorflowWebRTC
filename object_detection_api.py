@@ -101,11 +101,18 @@ def get_objects(image, threshold=0.5):
     # print("output_dict['num_detections']", output_dict)
     # print("output_dict['num_detections']", output_dict['num_detections'].shape)
       # all outputs are float32 numpy arrays, so convert types as appropriate
+    num = (num[0])
+    # # num = (output_dict['num_detections'][0])
+    classes = classes[0].astype(np.int64)
+    boxes = boxes[0]
+    scores = scores[0]
+
     # num = (output_dict['num_detections'][0])
     # # num = (output_dict['num_detections'][0])
     # classes = output_dict['detection_classes'][0].astype(np.int64)
     # boxes = output_dict['detection_boxes'][0]
     # scores = output_dict['detection_scores'][0]
+
 
     obj_above_thresh = sum(n > threshold for n in scores)
     print("detected %s objects in image above a %s score" % (obj_above_thresh, threshold))
