@@ -73,7 +73,7 @@ with detection_graph.as_default():
     detection_scores = detection_graph.get_tensor_by_name('detection_scores:0')
     detection_classes = detection_graph.get_tensor_by_name('detection_classes:0')
     num_detections = detection_graph.get_tensor_by_name('num_detections:0')
-sess = tf.Session()
+sess = tf.Session(graph=detection_graph)
 # added to put object in JSON
 class Object(object):
     def __init__(self):
