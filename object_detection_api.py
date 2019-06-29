@@ -98,7 +98,7 @@ def get_objects(image, threshold=0.5):
     output_dict = sess.run([detection_boxes, detection_scores, detection_classes, num_detections],
                              feed_dict={image_tensor: image_np_expanded})
 
-    print("output_dict['num_detections']", output_dict['num_detections'])
+    print("output_dict['num_detections']", output_dict)
     print("output_dict['num_detections']", output_dict['num_detections'].shape)
       # all outputs are float32 numpy arrays, so convert types as appropriate
     num = (output_dict['num_detections'][0])
