@@ -113,9 +113,11 @@ def get_objects(image, threshold=0.5):
     output = []
 
     # Add some metadata to the output
+    print("obj_above_thresh", type(obj_above_thresh))
+    print("obj_above_thresh", obj_above_thresh)
     item = Object()
     item.version = "0.0.1"
-    item.numObjects = int(obj_above_thresh)
+    item.numObjects = obj_above_thresh
     item.threshold = threshold
     output.append(item)
 
